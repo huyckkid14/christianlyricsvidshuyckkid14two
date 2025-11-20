@@ -134,8 +134,10 @@ body {
     margin: 40px auto 100px;
     padding: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
     gap: 40px;
+
+    justify-content: center;  /* ← THIS is the magic */
 }
 
 .video-card {
@@ -155,10 +157,13 @@ body {
 /* gradient thumbnail */
 .thumb {
     width: 100%;
-    padding-top: 56%;
+    height: 160px;
     border-radius: 14px;
-    background-image: url('lib/hallelujah_thumb.png');
-    animation: glow 6s ease infinite;
+    background-image: url('https://huyckkid14.github.io/christianlyricsvidshuyckkid14two/lib/hallelujah_thumb.png');
+    background-size: contain;   /* <- NO CROP */
+    background-position: center;
+    background-repeat: no-repeat;  /* prevents tiling */
+    background-color: #00000033;   /* optional: fill empty space */
 }
 
 @keyframes glow {
