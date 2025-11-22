@@ -33,7 +33,7 @@ body {
     margin-bottom: 35px;
 }
 
-/* CENTER BOX */
+/* PLAYER WINDOW */
 .player-wrapper {
     max-width: 650px;
     margin: auto;
@@ -45,7 +45,7 @@ body {
     text-align: center;
 }
 
-/* COVER */
+/* COVER ART */
 .cover {
     width: 100%;
     max-width: 320px;
@@ -58,27 +58,27 @@ body {
     box-shadow: 0 0 35px rgba(255,180,120,0.55);
 }
 
-/* CUSTOM CONTROLS */
+/* PLAY BUTTON */
 .controls {
     margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 25px;
 }
 
 .btn {
-    width: 65px;
-    height: 65px;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
     background: linear-gradient(145deg, #ff8b5f, #ff6f9c);
     box-shadow: 0 0 20px rgba(255,120,120,0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 2.4rem;
     cursor: pointer;
     transition: 0.2s;
+    user-select: none;
 }
 
 .btn:hover {
@@ -107,14 +107,14 @@ body {
     transition: width 0.2s linear;
 }
 
-/* TIME */
+/* TIME LABEL */
 .time {
     margin-top: 10px;
     font-size: 1.1rem;
     opacity: 0.85;
 }
 
-/* OFFICIAL BUTTON */
+/* OFFICIAL LINK */
 .official-btn {
     margin-top: 40px;
     display: inline-block;
@@ -134,7 +134,7 @@ body {
     box-shadow: 0 0 30px rgba(255,150,100,0.9);
 }
 
-/* DESCRIPTION SECTION */
+/* DESCRIPTION BLOCK */
 .description {
     max-width: 900px;
     margin: 70px auto;
@@ -156,19 +156,19 @@ body {
     text-align: center;
 }
 
-/* HOME LINK */
+/* BACK LINK */
 .home-link {
     display: block;
     text-align: center;
     margin-top: 50px;
     opacity: 0.75;
 }
+
 .home-link:hover {
     opacity: 1;
 }
 </style>
 </head>
-
 <body>
 
 <div class="header">Hallelujah (Hands High!)</div>
@@ -178,12 +178,12 @@ body {
 
     <div class="cover"></div>
 
-    <!-- PRETTY CUSTOM PLAYER -->
+    <!-- AUDIO FIXED HERE -->
     <audio id="audio" src="../lib/music/hallelujah.mp3"></audio>
 
+    <!-- ONE BUTTON -->
     <div class="controls">
-        <div class="btn" id="playBtn">▶</div>
-        <div class="btn" id="pauseBtn">⏸</div>
+        <div class="btn" id="toggleBtn">▶</div>
     </div>
 
     <div class="progress-container" id="progressContainer">
@@ -198,8 +198,7 @@ body {
 
 </div>
 
-
-<!-- FULL DESCRIPTION -->
+<!-- DESCRIPTION -->
 <div class="description">
 <h2>🌟 FULL MUSIC VIDEO OUT NOW: “Hallelujah (Hands High)” 🌟</h2>
 
@@ -230,19 +229,32 @@ Let your voice rise with heaven as you join the anthem.</p>
 <p>#HallelujahHandsHigh #ChristianMusic #SunoAI #WorshipAnthem #PraiseBreak #HandsHighWorship #FaithAndFire</p>
 </div>
 
-
 <a href="/index.html" class="home-link">← Back to Home</a>
 
 <script>
 const audio = document.getElementById("audio");
-const playBtn = document.getElementById("playBtn");
-const pauseBtn = document.getElementById("pauseBtn");
+const toggleBtn = document.getElementById("toggleBtn");
 const progress = document.getElementById("progress");
 const progressContainer = document.getElementById("progressContainer");
 const timeText = document.getElementById("timeText");
 
-playBtn.onclick = () => audio.play();
-pauseBtn.onclick = () => audio.pause();
+toggleBtn.onclick = () => {
+    if (audio.paused) {
+        audio.play();
+        toggleBtn.textContent = "⏸";
+    } else {
+        audio.pause();
+        toggleBtn.textContent = "▶";
+    }
+};
+
+audio.addEventListener("play", () => {
+    toggleBtn.textContent = "⏸";
+});
+
+audio.addEventListener("pause", () => {
+    toggleBtn.textContent = "▶";
+});
 
 audio.addEventListener("timeupdate", () => {
     const pct = (audio.currentTime / audio.duration) * 100;
@@ -250,7 +262,6 @@ audio.addEventListener("timeupdate", () => {
 
     const cur = format(audio.currentTime);
     const dur = format(audio.duration);
-
     timeText.textContent = `${cur} / ${dur}`;
 });
 
